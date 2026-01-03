@@ -21,9 +21,9 @@ const statusData = [
 export const Analytics = () => {
   const metrics = [
     { title: 'Total Executions', value: '3,015', change: '+15.3%', icon: Activity },
+    { title: 'AI-Powered Workflows', value: '12', change: '+25.0%', icon: Zap },
     { title: 'Avg Response Time', value: '2.4s', change: '-8.2%', icon: Clock },
     { title: 'Peak Performance', value: '125/hr', change: '+22.1%', icon: TrendingUp },
-    { title: 'Active Workflows', value: '48', change: '+12.0%', icon: Zap },
   ];
 
   return (

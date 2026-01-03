@@ -3,7 +3,7 @@ import { Outlet, useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import {
-  LayoutDashboard,
+  Home as HomeIcon,
   Workflow,
   Sparkles,
   BarChart3,
@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 
 const menuItems = [
-  { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
+  { icon: HomeIcon, label: 'Home', path: '/home' },
   { icon: Workflow, label: 'Workflows', path: '/workflows' },
   { icon: Sparkles, label: 'AI Builder', path: '/ai-builder' },
   { icon: BarChart3, label: 'Analytics', path: '/analytics' },
@@ -50,11 +50,11 @@ export const AppLayout = () => {
         <div className="px-6">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link to="/dashboard" className="flex items-center gap-2">
+            <Link to="/home" className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center">
                 <Sparkles className="w-5 h-5 text-white" />
               </div>
-              <span className="text-lg font-bold text-gray-900 dark:text-white">Cognexia</span>
+              <span className="text-lg font-bold text-gray-900 dark:text-white">ORvexia</span>
             </Link>
 
             {/* Desktop Navigation */}

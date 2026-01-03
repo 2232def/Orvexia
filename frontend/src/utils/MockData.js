@@ -165,7 +165,7 @@ export const testimonials = [
     name: 'Sarah Johnson',
     role: 'CTO, TechCorp',
     avatar: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=200',
-    content: 'Cognexia transformed how we handle automation. The AI-powered workflow builder is incredibly intuitive.',
+    content: 'ORvexia transformed how we handle automation. The AI-powered workflow builder is incredibly intuitive.',
     rating: 5,
   },
   {

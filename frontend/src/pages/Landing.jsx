@@ -10,8 +10,8 @@ export const Landing = () => {
 
   const handleDemoLogin = async () => {
     // Auto-login as demo user for testing
-    await login('demo@cognexia.com', 'demo123');
-    navigate('/dashboard');
+    await login('demo@orvexia.com', 'demo123');
+    navigate('/home');
   };
 
   return (
@@ -25,7 +25,7 @@ export const Landing = () => {
               <Zap className="w-5 h-5 text-white" strokeWidth={2.5} />
             </div>
             <span className="text-xl font-bold text-gray-900 dark:text-white">
-              Cognexia
+              ORvexia
             </span>
           </div>
 
@@ -215,7 +215,7 @@ export const Landing = () => {
             Ready to automate your workflow?
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 mb-10">
-            Join thousands of teams using Cognexia to save time and reduce errors.
+            Join thousands of teams using ORvexia to save time and reduce errors.
           </p>
           <button
             onClick={() => navigate('/signup')}
@@ -237,7 +237,7 @@ export const Landing = () => {
                   <Zap className="w-5 h-5 text-white" />
                 </div>
                 <span className="text-lg font-bold text-gray-900 dark:text-white">
-                  Cognexia
+                  ORvexia
                 </span>
               </div>
               <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -277,7 +277,7 @@ export const Landing = () => {
           </div>
 
           <div className="pt-8 border-t border-gray-200 dark:border-[#1a1a1a] text-center text-sm text-gray-600 dark:text-gray-400">
-            © 2024 Cognexia. All rights reserved.
+            © 2024 ORvexia. All rights reserved.
           </div>
         </div>
       </footer>

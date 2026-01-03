@@ -86,13 +86,13 @@ export const Workflows = () => {
                 className="group bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all"
               >
                 {/* Visual Header - Icon Bridge */}
-                <div className="h-28 bg-gray-50 dark:bg-[#222222] flex items-center justify-center relative border-b border-gray-100 dark:border-[#2a2a2a]">
+                <div className="h-32 bg-gray-50 dark:bg-[#222222] flex items-center justify-center relative border-b border-gray-100 dark:border-[#2a2a2a]">
                   <div className="flex items-center">
-                    <div className="w-10 h-10 bg-white dark:bg-gray-800 rounded-lg shadow-sm flex items-center justify-center p-2 border border-gray-100 dark:border-gray-700">
+                    <div className="w-16 h-16 bg-white dark:bg-gray-800 rounded-lg shadow-sm flex items-center justify-center p-3 border border-gray-100 dark:border-gray-700">
                       <img src={icons.left} alt="tool1" className="w-full h-full object-contain" />
                     </div>
-                    <div className="w-8 h-[1px] bg-gray-300 dark:bg-gray-700 mx-1"></div>
-                    <div className="w-10 h-10 bg-white dark:bg-gray-800 rounded-lg shadow-sm flex items-center justify-center p-2 border border-gray-100 dark:border-gray-700">
+                    <div className="w-10 h-[1px] bg-gray-300 dark:bg-gray-700 mx-2"></div>
+                    <div className="w-16 h-16 bg-white dark:bg-gray-800 rounded-lg shadow-sm flex items-center justify-center p-3 border border-gray-100 dark:border-gray-700">
                       <img src={icons.right} alt="tool2" className="w-full h-full object-contain" />
                     </div>
                   </div>

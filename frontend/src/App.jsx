@@ -4,7 +4,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import { Landing } from './pages/Landing';
 import { Login } from './pages/Login';
 import { Signup } from './pages/Signup';
-import { Dashboard } from './pages/Dashboard';
+import { Home } from './pages/Home';
 import { Workflows } from './pages/Workflows';
 import { WorkflowBuilder } from './pages/WorkflowBuilder';
 import { AIBuilder } from './pages/AIBuilder';
@@ -38,7 +38,7 @@ const ProtectedRoute = ({ children }) => {
 
 const PublicRoute = ({ children }) => {
   const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <Navigate to="/dashboard" /> : children;
+  return isAuthenticated ? <Navigate to="/home" /> : children;
 };
 
 function App() {
@@ -71,13 +71,14 @@ function App() {
                 </ProtectedRoute>
               }
             >
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/workflows" element={<Workflows />} />
-              <Route path="/workflows/builder" element={<WorkflowBuilder />} />
-              <Route path="/ai-builder" element={<AIBuilder />} />
-              <Route path="/analytics" element={<Analytics />} />
-              <Route path="/templates" element={<Templates />} />
-              <Route path="/settings" element={<Settings />} />
+              <Route path="home" element={<Home />} />
+              <Route path="workflows" element={<Workflows />} />
+              <Route path="workflows/builder" element={<WorkflowBuilder />} />
+              <Route path="ai-builder" element={<AIBuilder />} />
+              <Route path="analytics" element={<Analytics />} />
+              <Route path="templates" element={<Templates />} />
+              <Route path="settings" element={<Settings />} />
+              <Route index element={<Navigate to="/home" replace />} />
             </Route>
 
             <Route path="*" element={<Navigate to="/" />} />

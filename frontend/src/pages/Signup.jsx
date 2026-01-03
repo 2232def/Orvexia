@@ -21,7 +21,7 @@ export const Signup = () => {
     setLoading(true);
     try {
       await signup(formData.name, formData.email, formData.password);
-      navigate('/dashboard');
+      navigate('/home');
     } catch (error) {
       console.error('Signup error:', error);
     } finally {
@@ -51,7 +51,7 @@ export const Signup = () => {
               <Zap className="w-6 h-6 text-white" strokeWidth={2.5} />
             </div>
             <span className="text-2xl font-bold text-gray-900 dark:text-white">
-              Cognexia
+              ORvexia
             </span>
           </Link>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">

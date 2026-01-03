@@ -16,7 +16,7 @@ export const Login = () => {
     setLoading(true);
     try {
       await login(email, password);
-      navigate('/dashboard');
+      navigate('/home');
     } catch (error) {
       console.error('Login error:', error);
     } finally {
@@ -39,7 +39,7 @@ export const Login = () => {
               <Zap className="w-6 h-6 text-white" strokeWidth={2.5} />
             </div>
             <span className="text-2xl font-bold text-gray-900 dark:text-white">
-              Cognexia
+              ORvexia
             </span>
           </Link>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
