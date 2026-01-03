@@ -21,7 +21,8 @@ import {
   Square,
   MessageSquare,
   Search,
-  Filter
+  Filter,
+  Activity
 } from 'lucide-react';
 
 export const Home = () => {
@@ -43,24 +44,24 @@ export const Home = () => {
       color: 'from-purple-500 to-purple-600'
     },
     { 
-      icon: Table, 
-      label: 'Data Tables', 
-      description: 'Automated data management',
-      path: '/workflows',
+      icon: BarChart3, 
+      label: 'Analytics', 
+      description: 'Track performance metrics',
+      path: '/analytics',
       color: 'from-blue-500 to-blue-600'
     },
     { 
-      icon: Square, 
-      label: 'Interface', 
-      description: 'Forms and pages',
+      icon: FolderKanban, 
+      label: 'Templates', 
+      description: 'Browse workflow templates',
       path: '/templates',
       color: 'from-green-500 to-green-600'
     },
     { 
-      icon: MessageSquare, 
-      label: 'Chatbot', 
-      description: 'AI-powered chatbot',
-      path: '/ai-builder',
+      icon: Activity, 
+      label: 'Monitoring', 
+      description: 'Real-time system monitoring',
+      path: null,
       color: 'from-pink-500 to-pink-600'
     },
   ];
@@ -182,7 +183,7 @@ export const Home = () => {
         {/* Start from Scratch Section */}
         <div>
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-            Start from scratch
+            Features
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {startFromScratch.map((item, idx) => (
@@ -191,8 +192,8 @@ export const Home = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 + idx * 0.1 }}
-              onClick={() => navigate(item.path)}
-              className="group cursor-pointer bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-xl p-6 hover:shadow-lg hover:border-orange-300 dark:hover:border-orange-700 transition-all hover-lift"
+                onClick={() => item.path && navigate(item.path)}
+                className={`group bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-xl p-6 hover:shadow-lg hover:border-orange-300 dark:hover:border-orange-700 transition-all hover-lift ${item.path ? 'cursor-pointer' : 'cursor-default'}`}
               >
                 <div className={`w-12 h-12 bg-gradient-to-br ${item.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                   <item.icon className="w-6 h-6 text-white" />

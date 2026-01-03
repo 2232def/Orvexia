@@ -25,7 +25,6 @@ const menuItems = [
   { icon: Sparkles, label: 'AI Builder', path: '/ai-builder' },
   { icon: BarChart3, label: 'Analytics', path: '/analytics' },
   { icon: FolderKanban, label: 'Templates', path: '/templates' },
-  { icon: Settings, label: 'Settings', path: '/settings' },
 ];
 
 export const AppLayout = () => {
@@ -143,14 +142,6 @@ export const AppLayout = () => {
                       >
                         <User className="w-4 h-4" />
                         Profile
-                      </Link>
-                      <Link
-                        to="/settings"
-                        className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-[#222222] transition-colors text-sm text-gray-700 dark:text-gray-300"
-                        onClick={() => setUserMenuOpen(false)}
-                      >
-                        <Settings className="w-4 h-4" />
-                        Settings
                       </Link>
                       <hr className="my-2 border-gray-200 dark:border-[#2a2a2a]" />
                       <button
