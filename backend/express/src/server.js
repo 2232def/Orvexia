@@ -4,6 +4,7 @@ require('./config/mongoose-connection');
 const logger = require('./middlewares/logger');
 const workflowRouter = require('./routes/workflowRoutes');
 const appsRouter = require('./routes/apps.routes');
+const webhookRoutes = require('./routes/webhookRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/workflows',workflowRouter);
+app.use('/api/webhook', webhookRoutes);
 app.use('/api/apps', appsRouter);
 
 // console.log('Apps Router Loaded', appsRouter);
