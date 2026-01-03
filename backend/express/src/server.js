@@ -1,14 +1,12 @@
-require('dotenv').config({ path: '../../.env' });
+require('dotenv').config();
 const express = require('express');
-const connectDB = require('./config/mongoose-connection');
+require('./config/mongoose-connection');
 const demoRoutes = require('./routes/demoRoutes');
 const logger = require('./middlewares/logger');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Connect to Database
-connectDB();
 
 app.use(express.json());
 app.use(logger);

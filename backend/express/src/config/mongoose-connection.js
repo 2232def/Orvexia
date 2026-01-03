@@ -1,14 +1,24 @@
 const mongoose = require('mongoose');
 
-const connectDB = async () => {
-  try {
-    const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/workflow_system';
-    await mongoose.connect(mongoURI);
-    console.log('MongoDB Connected successfully');
-  } catch (err) {
-    console.error('MongoDB connection error:', err.message);
-    process.exit(1);
-  }
-};
+const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/workflow_management';
 
-module.exports = connectDB;
+mongoose.connect(mongoUri)
+  .then(() => {
+    console.log('✅ MongoDB connected successfully');
+    console.log(`📊 Database: ${mongoose.connection.name}`);
+  })
+  .catch(err => {
+    console.error('❌ MongoDB connection error:', err);
+    process.exit(1);
+  });
+
+// Handle connection events
+mongoose.connection.on('disconnected', () => {
+  console.log('⚠️ MongoDB disconnected');
+});
+
+mongoose.connection.on('error', (err) => {
+  console.error('❌ MongoDB error:', err);
+});
+
+module.exports = mongoose.connection;
