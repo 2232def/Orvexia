@@ -15,10 +15,6 @@ import { AppLayout } from './layouts/AppLayout';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
-  
-  // Development mode: Allow access for frontend testing
-  // Set this to true to bypass authentication for testing
-  const DEV_MODE = import.meta.env.DEV || false;
 
   if (loading) {
     return (
@@ -28,17 +24,17 @@ const ProtectedRoute = ({ children }) => {
     );
   }
 
-  // In development mode, allow access without authentication
-  if (DEV_MODE && !isAuthenticated) {
-    return children;
-  }
-
   return isAuthenticated ? children : <Navigate to="/login" />;
 };
 
-const PublicRoute = ({ children }) => {
+const PublicRoute = ({ children, allowAuthenticated = false }) => {
   const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <Navigate to="/home" /> : children;
+  // If allowAuthenticated is true, show the page even if authenticated
+  // Otherwise, redirect authenticated users to home
+  if (!allowAuthenticated && isAuthenticated) {
+    return <Navigate to="/home" />;
+  }
+  return children;
 };
 
 function App() {
@@ -47,6 +43,7 @@ function App() {
       <ThemeProvider>
         <AuthProvider>
           <Routes>
+            {/* Public routes - always accessible */}
             <Route path="/" element={<Landing />} />
             <Route
               path="/login"
@@ -64,6 +61,8 @@ function App() {
                 </PublicRoute>
               }
             />
+            
+            {/* Protected routes - require authentication */}
             <Route
               element={
                 <ProtectedRoute>
@@ -78,10 +77,10 @@ function App() {
               <Route path="analytics" element={<Analytics />} />
               <Route path="templates" element={<Templates />} />
               <Route path="settings" element={<Settings />} />
-              <Route index element={<Navigate to="/home" replace />} />
             </Route>
 
-            <Route path="*" element={<Navigate to="/" />} />
+            {/* Catch all - redirect to landing */}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </AuthProvider>
       </ThemeProvider>

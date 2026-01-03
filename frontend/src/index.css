@@ -32,3 +32,56 @@
     @apply bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent;
   }
 }
+
+/* Cursor Hover Animations */
+@layer utilities {
+  /* Smooth hover scale animations */
+  .hover-lift {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  .hover-lift:hover {
+    @apply -translate-y-1 scale-[1.02];
+  }
+  
+  /* Button hover animations */
+  button, a, [role="button"] {
+    @apply transition-all duration-200 ease-out;
+  }
+  
+  button:hover, a:hover, [role="button"]:hover {
+    @apply transform scale-105;
+  }
+  
+  /* Card hover animations */
+  .card-hover {
+    @apply transition-all duration-300 ease-out;
+  }
+  
+  .card-hover:hover {
+    @apply shadow-lg -translate-y-1 scale-[1.02];
+  }
+  
+  /* Image hover animations */
+  img {
+    @apply transition-transform duration-300 ease-out;
+  }
+  
+  /* Input field hover animations */
+  input, textarea, select {
+    @apply transition-all duration-200 ease-out;
+  }
+  
+  input:hover, textarea:hover, select:hover {
+    @apply border-orange-300 dark:border-orange-700;
+  }
+  
+  /* Icon hover animations */
+  svg {
+    @apply transition-transform duration-200 ease-out;
+  }
+  
+  button:hover svg, a:hover svg {
+    @apply transform scale-110;
+  }
+}

@@ -14,6 +14,12 @@ export const Landing = () => {
     navigate('/home');
   };
 
+  const handleGetStarted = async () => {
+    // Auto-login and redirect to home
+    await login('demo@orvexia.com', 'demo123');
+    navigate('/home');
+  };
+
   return (
     <div className="min-h-screen bg-[#fafafa] dark:bg-[#0a0a0a]">
 
@@ -37,7 +43,7 @@ export const Landing = () => {
               Login
             </button>
             <button
-              onClick={() => navigate('/signup')}
+              onClick={handleGetStarted}
               className="px-5 py-2 bg-orange-500 text-white text-sm font-semibold rounded-lg hover:bg-orange-600 transition"
             >
               Get Started
@@ -58,17 +64,17 @@ export const Landing = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
-              onClick={() => navigate('/signup')}
+              onClick={handleGetStarted}
               className="px-8 py-4 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition flex items-center justify-center gap-2"
             >
-              Start free trial
+              Get Started
               <ArrowRight className="w-5 h-5" />
             </button>
             <button
-              onClick={handleDemoLogin}
+              onClick={() => navigate('/login')}
               className="px-8 py-4 border border-gray-300 dark:border-[#2a2a2a] text-gray-700 dark:text-gray-300 font-semibold rounded-lg hover:bg-gray-50 dark:hover:bg-[#1a1a1a] transition"
             >
-              View demo
+              Login
             </button>
           </div>
 
@@ -218,10 +224,10 @@ export const Landing = () => {
             Join thousands of teams using ORvexia to save time and reduce errors.
           </p>
           <button
-            onClick={() => navigate('/signup')}
+            onClick={handleGetStarted}
             className="px-8 py-4 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition inline-flex items-center gap-2"
           >
-            Start free trial
+            Get Started
             <ArrowRight className="w-5 h-5" />
           </button>
         </div>
@@ -277,7 +283,7 @@ export const Landing = () => {
           </div>
 
           <div className="pt-8 border-t border-gray-200 dark:border-[#1a1a1a] text-center text-sm text-gray-600 dark:text-gray-400">
-            © 2024 ORvexia. All rights reserved.
+            © 2026 ORvexia. All rights reserved.
           </div>
         </div>
       </footer>
