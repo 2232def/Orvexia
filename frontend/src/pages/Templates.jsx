@@ -1,142 +1,290 @@
 import { motion } from 'framer-motion';
-import { Clock } from 'lucide-react';
+import { Search, Filter, TrendingUp, Clock, Users } from 'lucide-react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-/* =======================
-   TEMPLATE DATA (PNG/JPG ONLY — NO SVG)
-======================= */
-
-const templates = [
+// Real-life workflow templates inspired by Zapier
+const workflowTemplates = [
   {
     id: 1,
-    title: 'AI Agent Automation Flow',
-    description: 'Trigger → AI Agent → Tool → Output',
-    tags: ['AI', 'Workflow', 'Automation'],
-    image:
-      'https://miro.medium.com/v2/resize:fit:1400/1*eGmYz5R6kLZ3xJkq5Zq5YQ.png',
-    date: 'Feb 20, 2024',
-    readTime: '12 min',
+    title: 'Add new leads to Google Sheets',
+    description: 'When a new lead comes in from Facebook Lead Ads, automatically add them to a Google Sheets spreadsheet.',
+    category: 'Sales',
+    apps: ['Facebook Lead Ads', 'Google Sheets'],
+    icon: '📊',
+    uses: '12.3k',
+    time: '2 min',
+    difficulty: 'Easy',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop',
   },
   {
     id: 2,
-    title: 'API Orchestration Workflow',
-    description: 'Webhook → API Call → Transform → Response',
-    tags: ['API', 'Integration'],
-    image:
-      'https://miro.medium.com/v2/resize:fit:1400/1*9h9xXyF6dQwE5x7pX0h3yA.png',
-    date: 'Feb 18, 2024',
-    readTime: '10 min',
+    title: 'Create Trello cards from new emails',
+    description: 'When you receive an email in Gmail with a specific label, automatically create a Trello card.',
+    category: 'Productivity',
+    apps: ['Gmail', 'Trello'],
+    icon: '📋',
+    uses: '8.7k',
+    time: '3 min',
+    difficulty: 'Easy',
+    image: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=400&h=250&fit=crop',
   },
   {
     id: 3,
-    title: 'Voiceflow-Style Conversational Flow',
-    description: 'Intent → Decision → Response',
-    tags: ['Voice', 'Chatbot', 'LLM'],
-    image:
-      'https://uploads-ssl.webflow.com/62c5c7e50e6c7f3b53e5c0b3/63a41bb2df5cfb2d14f4f3c7_voiceflow-canvas.png',
-    date: 'Feb 15, 2024',
-    readTime: '14 min',
+    title: 'Send Slack notifications for new form responses',
+    description: 'When someone submits a Google Form, send a notification to a Slack channel with the response details.',
+    category: 'Communication',
+    apps: ['Google Forms', 'Slack'],
+    icon: '💬',
+    uses: '15.2k',
+    time: '2 min',
+    difficulty: 'Easy',
+    image: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=250&fit=crop',
   },
   {
     id: 4,
-    title: 'Auto Layout Workflow',
-    description: 'Automatically arranged nodes and connections',
-    tags: ['Auto-Layout', 'Graph'],
-    image:
-      'https://raw.githubusercontent.com/xyflow/xyflow/main/examples/assets/auto-layout.png',
-    date: 'Feb 12, 2024',
-    readTime: '11 min',
+    title: 'Save Gmail attachments to Google Drive',
+    description: 'Automatically save email attachments from Gmail to a specific Google Drive folder.',
+    category: 'Productivity',
+    apps: ['Gmail', 'Google Drive'],
+    icon: '📎',
+    uses: '9.4k',
+    time: '2 min',
+    difficulty: 'Easy',
+    image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=250&fit=crop',
   },
   {
     id: 5,
-    title: 'Business Process Automation (BPMN)',
-    description: 'Approval → Condition → Execution',
-    tags: ['BPM', 'Enterprise'],
-    image:
-      'https://camunda.com/wp-content/uploads/2022/03/bpmn-diagram-example.png',
-    date: 'Feb 10, 2024',
-    readTime: '15 min',
+    title: 'Add new HubSpot contacts to Mailchimp',
+    description: 'When a new contact is created in HubSpot, automatically add them to a Mailchimp audience.',
+    category: 'Marketing',
+    apps: ['HubSpot', 'Mailchimp'],
+    icon: '👥',
+    uses: '6.8k',
+    time: '3 min',
+    difficulty: 'Medium',
+    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=250&fit=crop',
   },
   {
     id: 6,
-    title: 'Integration Flow Builder',
-    description: 'Source → Mapping → Destination',
-    tags: ['Integration', 'Data'],
-    image:
-      'https://www.ibm.com/docs/en/SS9H2Y_7.6.0/com.ibm.websphere.integrator.doc/images/flow-editor.png',
-    date: 'Feb 8, 2024',
-    readTime: '9 min',
+    title: 'Create calendar events from email',
+    description: 'When you receive an email with meeting details, automatically create a Google Calendar event.',
+    category: 'Productivity',
+    apps: ['Gmail', 'Google Calendar'],
+    icon: '📅',
+    uses: '11.5k',
+    time: '4 min',
+    difficulty: 'Medium',
+    image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&h=250&fit=crop',
+  },
+  {
+    id: 7,
+    title: 'Post new blog posts to Twitter',
+    description: 'When a new blog post is published on WordPress, automatically share it on Twitter.',
+    category: 'Social Media',
+    apps: ['WordPress', 'Twitter'],
+    icon: '🐦',
+    uses: '7.9k',
+    time: '3 min',
+    difficulty: 'Easy',
+    image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&h=250&fit=crop',
+  },
+  {
+    id: 8,
+    title: 'Send invoice emails from Stripe payments',
+    description: 'When a payment is received in Stripe, automatically send an invoice email to the customer.',
+    category: 'Finance',
+    apps: ['Stripe', 'Gmail'],
+    icon: '💳',
+    uses: '5.2k',
+    time: '3 min',
+    difficulty: 'Medium',
+    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=250&fit=crop',
+  },
+  {
+    id: 9,
+    title: 'Create tasks in Asana from Slack messages',
+    description: 'When someone mentions a task in Slack, automatically create a task in Asana.',
+    category: 'Productivity',
+    apps: ['Slack', 'Asana'],
+    icon: '✅',
+    uses: '4.6k',
+    time: '4 min',
+    difficulty: 'Medium',
+    image: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=250&fit=crop',
+  },
+  {
+    id: 10,
+    title: 'Backup new files to Dropbox',
+    description: 'When a new file is added to Google Drive, automatically create a backup copy in Dropbox.',
+    category: 'Data Management',
+    apps: ['Google Drive', 'Dropbox'],
+    icon: '💾',
+    uses: '3.8k',
+    time: '2 min',
+    difficulty: 'Easy',
+    image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=250&fit=crop',
+  },
+  {
+    id: 11,
+    title: 'Send SMS notifications for new orders',
+    description: 'When a new order is created in Shopify, send an SMS notification using Twilio.',
+    category: 'E-commerce',
+    apps: ['Shopify', 'Twilio'],
+    icon: '📱',
+    uses: '2.9k',
+    time: '5 min',
+    difficulty: 'Medium',
+    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=250&fit=crop',
+  },
+  {
+    id: 12,
+    title: 'Update customer records in Salesforce',
+    description: 'When a contact is updated in HubSpot, automatically sync the changes to Salesforce.',
+    category: 'CRM',
+    apps: ['HubSpot', 'Salesforce'],
+    icon: '🔄',
+    uses: '4.1k',
+    time: '4 min',
+    difficulty: 'Medium',
+    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=250&fit=crop',
   },
 ];
 
-/* =======================
-   COMPONENT
-======================= */
+const categories = ['All', 'Sales', 'Productivity', 'Marketing', 'Communication', 'Finance', 'Social Media', 'E-commerce', 'CRM', 'Data Management'];
 
 export const Templates = () => {
+  const navigate = useNavigate();
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredTemplates = workflowTemplates.filter(template => {
+    const matchesCategory = selectedCategory === 'All' || template.category === selectedCategory;
+    const matchesSearch = searchQuery === '' || 
+      template.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      template.description.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
+  const handleUseTemplate = (template) => {
+    navigate('/workflows/builder');
+  };
+
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white">
-      <div className="max-w-7xl mx-auto px-6 py-14">
-
-        <header className="mb-14">
-          <h1 className="text-4xl font-bold mb-3">Workflow Templates</h1>
-          <p className="text-gray-400 max-w-2xl">
-            Real workflow diagrams inspired by modern automation and flow builders.
+    <div className="min-h-screen bg-gray-50 dark:bg-[#111111]">
+      <div className="max-w-7xl mx-auto px-6 py-8">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+            Workflow Templates
+          </h1>
+          <p className="text-gray-600 dark:text-gray-400">
+            Choose from thousands of pre-built workflows to automate your work
           </p>
-        </header>
+        </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {templates.map((item, idx) => (
-            <motion.article
-              key={item.id}
+        {/* Search and Filters */}
+        <div className="mb-6 space-y-4">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search templates..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-3 bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-lg text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition"
+            />
+          </div>
+
+          {/* Category Filters */}
+          <div className="flex items-center gap-2 flex-wrap">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`
+                  px-4 py-2 rounded-lg text-sm font-medium transition-all
+                  ${
+                    selectedCategory === category
+                      ? 'bg-orange-500 text-white shadow-sm'
+                      : 'bg-white dark:bg-[#1a1a1a] text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-[#2a2a2a] hover:border-orange-300 dark:hover:border-orange-700'
+                  }
+                `}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Templates Grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredTemplates.map((template, idx) => (
+            <motion.div
+              key={template.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.08 }}
-              className="group cursor-pointer"
+              transition={{ delay: idx * 0.05 }}
+              onClick={() => handleUseTemplate(template)}
+              className="group cursor-pointer bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-xl overflow-hidden hover:shadow-lg hover:border-orange-300 dark:hover:border-orange-700 transition-all"
             >
-              <div className="rounded-xl overflow-hidden border border-white/10 bg-[#0d0d0d] hover:border-orange-500 transition">
-
-                {/* IMAGE (NOW WILL SHOW) */}
-                <div className="h-44 bg-black flex items-center justify-center">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-full object-cover"
-                  />
+              {/* Image */}
+              <div className="h-40 bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-950/20 dark:to-orange-900/10 relative overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-6xl">{template.icon}</span>
                 </div>
-
-                <div className="p-5 space-y-3">
-                  <div className="flex flex-wrap gap-2">
-                    {item.tags.map(tag => (
-                      <span
-                        key={tag}
-                        className="text-xs px-2 py-1 rounded bg-white/10 text-gray-300"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <h3 className="text-lg font-semibold group-hover:text-orange-500 transition">
-                    {item.title}
-                  </h3>
-
-                  <p className="text-sm text-gray-400">
-                    {item.description}
-                  </p>
-
-                  <div className="flex items-center gap-2 text-xs text-gray-500 pt-2">
-                    <Clock className="w-3 h-3" />
-                    <span>{item.date}</span>
-                    <span>•</span>
-                    <span>{item.readTime}</span>
-                  </div>
+                <div className="absolute top-3 right-3">
+                  <span className="px-2 py-1 bg-white/90 dark:bg-[#1a1a1a]/90 backdrop-blur-sm text-xs font-medium text-gray-700 dark:text-gray-300 rounded">
+                    {template.difficulty}
+                  </span>
                 </div>
-
               </div>
-            </motion.article>
+
+              {/* Content */}
+              <div className="p-5">
+                <div className="flex items-start justify-between mb-2">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition line-clamp-2">
+                    {template.title}
+                  </h3>
+                </div>
+
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
+                  {template.description}
+                </p>
+
+                {/* Apps */}
+                <div className="flex items-center gap-2 mb-4 flex-wrap">
+                  {template.apps.map((app, i) => (
+                    <span
+                      key={i}
+                      className="px-2.5 py-1 bg-gray-100 dark:bg-[#222222] text-gray-700 dark:text-gray-300 text-xs font-medium rounded"
+                    >
+                      {app}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Stats */}
+                <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400 pt-4 border-t border-gray-100 dark:border-[#2a2a2a]">
+                  <div className="flex items-center gap-1">
+                    <Users className="w-3.5 h-3.5" />
+                    <span>{template.uses} uses</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Clock className="w-3.5 h-3.5" />
+                    <span>{template.time} setup</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           ))}
         </div>
 
+        {filteredTemplates.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-gray-500 dark:text-gray-400">No templates found matching your search.</p>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -32,7 +32,7 @@ export const Workflows = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-[#f9fafb] dark:bg-[#0a0a0a] p-4 md:p-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#111111] p-4 md:p-8">
       <div className="max-w-6xl mx-auto space-y-6">
         
         {/* Search Bar - Top Section */}
@@ -41,7 +41,7 @@ export const Workflows = () => {
           <input 
             type="text" 
             placeholder="Search workflows..." 
-            className="w-full pl-10 pr-4 py-2 bg-white dark:bg-[#111] border border-gray-200 dark:border-gray-800 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-orange-500"
+            className="w-full pl-10 pr-4 py-2 bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-orange-500"
           />
         </div>
 
@@ -67,7 +67,7 @@ export const Workflows = () => {
             { label: 'Drafts', value: '0' },
             { label: 'Success Rate', value: '96.2%' },
           ].map((stat, idx) => (
-            <div key={idx} className="bg-white dark:bg-[#111] border border-gray-200 dark:border-gray-800 rounded-lg p-3 shadow-sm">
+            <div key={idx} className="bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-lg p-3 shadow-sm">
               <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-tight">{stat.label}</p>
               <p className="text-lg font-bold text-gray-800 dark:text-white">{stat.value}</p>
             </div>
@@ -83,10 +83,10 @@ export const Workflows = () => {
                 key={workflow.id}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="group bg-white dark:bg-[#111] border border-gray-100 dark:border-gray-800 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all"
+                className="group bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all"
               >
                 {/* Visual Header - Icon Bridge */}
-                <div className="h-28 bg-[#f8fafc] dark:bg-[#161616] flex items-center justify-center relative border-b border-gray-50 dark:border-gray-800">
+                <div className="h-28 bg-gray-50 dark:bg-[#222222] flex items-center justify-center relative border-b border-gray-100 dark:border-[#2a2a2a]">
                   <div className="flex items-center">
                     <div className="w-10 h-10 bg-white dark:bg-gray-800 rounded-lg shadow-sm flex items-center justify-center p-2 border border-gray-100 dark:border-gray-700">
                       <img src={icons.left} alt="tool1" className="w-full h-full object-contain" />

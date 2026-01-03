@@ -463,7 +463,7 @@ export const WorkflowBuilder = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-black p-6">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#111111] p-6">
       <div className="h-[calc(100vh-3rem)] flex gap-6">
         {/* Left Sidebar */}
         <motion.div
@@ -472,7 +472,7 @@ export const WorkflowBuilder = () => {
           className="w-72 flex-shrink-0 space-y-4"
         >
           {/* Header */}
-          <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 shadow-sm">
+          <div className="bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-xl p-4 shadow-sm">
             <button
               onClick={() => navigate('/workflows')}
               className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white mb-3 transition"
@@ -490,7 +490,7 @@ export const WorkflowBuilder = () => {
           </div>
 
           {/* Node Palette - Draggable */}
-          <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 shadow-sm">
+          <div className="bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-xl p-4 shadow-sm">
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
               <Zap className="w-4 h-4 text-orange-500" />
               Drag to Canvas
@@ -521,7 +521,7 @@ export const WorkflowBuilder = () => {
           </div>
 
           {/* Actions */}
-          <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 shadow-sm">
+          <div className="bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-xl p-4 shadow-sm">
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">
               Quick Actions
             </h3>
@@ -564,7 +564,7 @@ export const WorkflowBuilder = () => {
         {/* Canvas with Undo/Redo */}
         <div className="flex-1 flex flex-col gap-4">
           {/* Top Toolbar */}
-          <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-3 flex items-center justify-between shadow-sm">
+          <div className="bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-xl p-3 flex items-center justify-between shadow-sm">
             <div className="flex items-center gap-3">
               <button
                 onClick={undo}
@@ -601,7 +601,7 @@ export const WorkflowBuilder = () => {
 
           {/* Canvas */}
           <div
-            className="flex-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden shadow-sm"
+            className="flex-1 bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-xl overflow-hidden shadow-sm"
             onDrop={onDrop}
             onDragOver={onDragOver}
           >
@@ -802,11 +802,11 @@ export const WorkflowBuilder = () => {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white dark:bg-gray-800 rounded-2xl max-w-5xl w-full max-h-[85vh] overflow-hidden shadow-2xl border border-gray-200 dark:border-gray-700"
+              className="bg-white dark:bg-[#1a1a1a] rounded-2xl max-w-5xl w-full max-h-[85vh] overflow-hidden shadow-2xl border border-gray-200 dark:border-[#2a2a2a]"
             >
               <div className="flex h-full max-h-[85vh]">
                 {/* Left Categories */}
-                <div className="w-52 bg-gray-50 dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 p-4 overflow-y-auto">
+                <div className="w-52 bg-gray-50 dark:bg-[#222222] border-r border-gray-200 dark:border-[#2a2a2a] p-4 overflow-y-auto">
                   <h3 className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
                     Categories
                   </h3>
@@ -834,7 +834,7 @@ export const WorkflowBuilder = () => {
                 {/* Right Content */}
                 <div className="flex-1 flex flex-col min-w-0">
                   {/* Search Header */}
-                  <div className="p-5 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+                  <div className="p-5 border-b border-gray-200 dark:border-[#2a2a2a] bg-white dark:bg-[#1a1a1a]">
                     <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
                       Choose an App
                     </h2>
@@ -852,7 +852,7 @@ export const WorkflowBuilder = () => {
                   </div>
 
                   {/* Apps Grid */}
-                  <div className="flex-1 overflow-y-auto p-6 bg-gray-50 dark:bg-gray-900">
+                  <div className="flex-1 overflow-y-auto p-6 bg-gray-50 dark:bg-[#222222]">
                     {filteredApps.length === 0 ? (
                       <div className="text-center py-12">
                         <AlertCircle className="w-12 h-12 text-gray-400 mx-auto mb-3" />
@@ -911,7 +911,7 @@ export const WorkflowBuilder = () => {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden shadow-2xl border border-gray-200 dark:border-gray-700"
+              className="bg-white dark:bg-[#1a1a1a] rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden shadow-2xl border border-gray-200 dark:border-[#2a2a2a]"
             >
               {/* Header */}
               <div className="p-6 border-b border-gray-200 dark:border-gray-700">
@@ -1009,7 +1009,7 @@ export const WorkflowBuilder = () => {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.95, y: 20 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white dark:bg-gray-800 rounded-2xl max-w-3xl w-full max-h-[80vh] overflow-hidden shadow-2xl border border-gray-200 dark:border-gray-700"
+              className="bg-white dark:bg-[#1a1a1a] rounded-2xl max-w-3xl w-full max-h-[80vh] overflow-hidden shadow-2xl border border-gray-200 dark:border-[#2a2a2a]"
             >
               <div className="p-6 border-b border-gray-200 dark:border-gray-700">
                 <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-1">

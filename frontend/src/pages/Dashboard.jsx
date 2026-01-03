@@ -15,7 +15,7 @@ export const Dashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#fafafa] dark:bg-[#0a0a0a] p-6 space-y-6">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#111111] p-6 space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -44,7 +44,7 @@ export const Dashboard = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: idx * 0.1 }}
           >
-            <div className="bg-white dark:bg-[#0d0d0d] border border-gray-200 dark:border-[#1a1a1a] rounded-lg p-6">
+            <div className="bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-lg p-6 shadow-sm">
               <div className="flex items-center justify-between mb-4">
                 <div className="w-10 h-10 bg-orange-50 dark:bg-orange-950/30 rounded-lg flex items-center justify-center">
                   <metric.icon className="w-5 h-5 text-orange-600 dark:text-orange-500" />

@@ -33,10 +33,10 @@ export const AIBuilder = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#fafafa] dark:bg-[#0a0a0a] p-6">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#111111] p-6">
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
-        <div className="bg-white dark:bg-[#0d0d0d] border border-gray-200 dark:border-[#1a1a1a] rounded-lg p-8">
+          <div className="bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-lg p-8">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 bg-orange-50 dark:bg-orange-950/30 rounded-lg flex items-center justify-center">
               <Sparkles className="w-6 h-6 text-orange-600 dark:text-orange-500" />
@@ -51,7 +51,7 @@ export const AIBuilder = () => {
         </div>
 
         {/* Chat Interface */}
-        <div className="bg-white dark:bg-[#0d0d0d] border border-gray-200 dark:border-[#1a1a1a] rounded-lg overflow-hidden">
+        <div className="bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-lg overflow-hidden">
           <div className="h-[500px] overflow-y-auto p-6 space-y-4">
             {messages.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-center">
@@ -72,7 +72,7 @@ export const AIBuilder = () => {
                     <button
                       key={i}
                       onClick={() => setInput(suggestion)}
-                      className="w-full text-left px-4 py-3 border border-gray-200 dark:border-[#1a1a1a] bg-[#fafafa] dark:bg-[#0a0a0a] rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:border-orange-500 hover:bg-white dark:hover:bg-[#0d0d0d] transition"
+                      className="w-full text-left px-4 py-3 border border-gray-200 dark:border-[#2a2a2a] bg-gray-50 dark:bg-[#222222] rounded-lg text-sm text-gray-700 dark:text-gray-300 hover:border-orange-500 hover:bg-white dark:hover:bg-[#1a1a1a] transition"
                     >
                       {suggestion}
                     </button>
@@ -98,7 +98,7 @@ export const AIBuilder = () => {
                       className={`max-w-[80%] px-4 py-3 rounded-lg ${
                         m.role === 'user'
                           ? 'bg-orange-500 text-white'
-                          : 'bg-[#fafafa] dark:bg-[#0a0a0a] text-gray-900 dark:text-white border border-gray-200 dark:border-[#1a1a1a]'
+                          : 'bg-gray-50 dark:bg-[#222222] text-gray-900 dark:text-white border border-gray-200 dark:border-[#2a2a2a]'
                       }`}
                     >
                       <p className="text-sm leading-relaxed whitespace-pre-line">
@@ -116,7 +116,7 @@ export const AIBuilder = () => {
                     <div className="w-8 h-8 bg-orange-50 dark:bg-orange-950/30 rounded-lg flex items-center justify-center">
                       <Loader2 className="w-4 h-4 text-orange-600 dark:text-orange-500 animate-spin" />
                     </div>
-                    <div className="px-4 py-3 rounded-lg bg-[#fafafa] dark:bg-[#0a0a0a] border border-gray-200 dark:border-[#1a1a1a]">
+                    <div className="px-4 py-3 rounded-lg bg-gray-50 dark:bg-[#222222] border border-gray-200 dark:border-[#2a2a2a]">
                       <div className="flex gap-1">
                         <div className="w-2 h-2 bg-orange-500 rounded-full animate-bounce" />
                         <div className="w-2 h-2 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
@@ -130,14 +130,14 @@ export const AIBuilder = () => {
           </div>
 
           {/* Input */}
-          <div className="p-4 border-t border-gray-200 dark:border-[#1a1a1a] bg-[#fafafa] dark:bg-[#0a0a0a]">
+          <div className="p-4 border-t border-gray-200 dark:border-[#2a2a2a] bg-gray-50 dark:bg-[#222222]">
             <form onSubmit={handleSubmit} className="flex gap-3">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Describe your workflow..."
-                className="flex-1 px-4 py-3 bg-white dark:bg-[#0d0d0d] border border-gray-200 dark:border-[#1a1a1a] rounded-lg text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
+                className="flex-1 px-4 py-3 bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-lg text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
               />
               <button
                 type="submit"

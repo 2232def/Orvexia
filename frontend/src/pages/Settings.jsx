@@ -22,7 +22,7 @@ export const Settings = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#fafafa] dark:bg-[#0a0a0a] p-6">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#111111] p-6">
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
         <div>
@@ -36,7 +36,7 @@ export const Settings = () => {
 
         {/* Profile */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <div className="bg-white dark:bg-[#0d0d0d] border border-gray-200 dark:border-[#1a1a1a] rounded-lg p-6">
+          <div className="bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-lg p-6 shadow-sm">
             <div className="flex items-center gap-3 mb-6">
               <User className="w-5 h-5 text-orange-600 dark:text-orange-500" />
               <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
@@ -75,7 +75,7 @@ export const Settings = () => {
                   <input
                     type="text"
                     defaultValue={user?.name}
-                    className="w-full px-4 py-2 border border-gray-200 dark:border-[#1a1a1a] bg-white dark:bg-[#0d0d0d] rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
+                    className="w-full px-4 py-2 border border-gray-200 dark:border-[#2a2a2a] bg-white dark:bg-[#1a1a1a] rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                   />
                 </div>
 
@@ -86,7 +86,7 @@ export const Settings = () => {
                   <input
                     type="email"
                     defaultValue={user?.email}
-                    className="w-full px-4 py-2 border border-gray-200 dark:border-[#1a1a1a] bg-white dark:bg-[#0d0d0d] rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
+                    className="w-full px-4 py-2 border border-gray-200 dark:border-[#2a2a2a] bg-white dark:bg-[#1a1a1a] rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                   />
                 </div>
               </div>
@@ -100,7 +100,7 @@ export const Settings = () => {
 
         {/* Appearance */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-          <div className="bg-white dark:bg-[#0d0d0d] border border-gray-200 dark:border-[#1a1a1a] rounded-lg p-6">
+          <div className="bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-lg p-6 shadow-sm">
             <div className="flex items-center gap-3 mb-6">
               <Palette className="w-5 h-5 text-orange-600 dark:text-orange-500" />
               <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
@@ -119,7 +119,7 @@ export const Settings = () => {
               </div>
               <button
                 onClick={toggleTheme}
-                className="px-4 py-2 border border-gray-200 dark:border-[#1a1a1a] text-sm font-medium text-gray-700 dark:text-gray-300 rounded-lg hover:bg-[#fafafa] dark:hover:bg-[#0a0a0a] transition"
+                className="px-4 py-2 border border-gray-200 dark:border-[#2a2a2a] text-sm font-medium text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-[#222222] transition"
               >
                 Switch to {theme === 'dark' ? 'Light' : 'Dark'}
               </button>
@@ -129,7 +129,7 @@ export const Settings = () => {
 
         {/* Notifications */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-          <div className="bg-white dark:bg-[#0d0d0d] border border-gray-200 dark:border-[#1a1a1a] rounded-lg p-6">
+          <div className="bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-lg p-6 shadow-sm">
             <div className="flex items-center gap-3 mb-6">
               <Bell className="w-5 h-5 text-orange-600 dark:text-orange-500" />
               <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
@@ -163,7 +163,7 @@ export const Settings = () => {
 
         {/* Security */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-          <div className="bg-white dark:bg-[#0d0d0d] border border-gray-200 dark:border-[#1a1a1a] rounded-lg p-6">
+          <div className="bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-lg p-6 shadow-sm">
             <div className="flex items-center gap-3 mb-6">
               <Shield className="w-5 h-5 text-orange-600 dark:text-orange-500" />
               <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
