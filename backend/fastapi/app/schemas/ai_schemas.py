@@ -23,5 +23,10 @@ class WorkflowDefinition(BaseModel):
     edges: List[ReactFlowEdge]
     summary: str=Field(description="Short summary of what was built")
 
+class HistoryItem(BaseModel):
+    role: str
+    content: str
+
 class ChatRequest(BaseModel):
     message: str
+    history: List[HistoryItem]=[]
