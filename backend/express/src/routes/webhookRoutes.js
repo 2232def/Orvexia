@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const webhookController = require('../controllers/webhookController');
+const {webhook} = require('../controllers/webhookController');
 
-router.post('/:slug', webhookController);
+router.post('/:slug', webhook);
 
 module.exports = router;

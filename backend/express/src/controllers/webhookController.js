@@ -36,4 +36,4 @@ const webhook = async (req, res) => {
     }
 };
 
-export default webhook;
+module.exports = { webhook };
