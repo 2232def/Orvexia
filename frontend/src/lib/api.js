@@ -1,32 +1,29 @@
-import { API_BASE_URL } from '../constants';
+import axios from 'axios';
 
-// API client configuration
-const api = {
-  get: async (endpoint) => {
-    try {
-      const response = await fetch(`${API_BASE_URL}${endpoint}`);
-      if (!response.ok) throw new Error('Network response was not ok');
-      return await response.json();
-    } catch (error) {
-      console.error('API GET Error:', error);
-      throw error;
-    }
+const api = axios.create({
+  baseURL: '/api', // Proxy handles the rest
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// Workflow API endpoints
+export const workflowApi = {
+  getAll: async () => {
+    const response = await api.get('/workflows');
+    return response.data;
+  },
+  
+  getById: async (id) => {
+    const response = await api.get(`/workflows/${id}`);
+    return response.data;
   },
 
-  post: async (endpoint, data) => {
-    try {
-      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) throw new Error('Network response was not ok');
-      return await response.json();
-    } catch (error) {
-      console.error('API POST Error:', error);
-      throw error;
-    }
-  },
+  create: async (data) => {
+    const response = await api.post('/workflows', data);
+    return response.data;
+  }
 };
 
 export default api;

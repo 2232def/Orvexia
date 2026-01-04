@@ -73,6 +73,7 @@ function App() {
               <Route path="home" element={<Home />} />
               <Route path="workflows" element={<Workflows />} />
               <Route path="workflows/builder" element={<WorkflowBuilder />} />
+              <Route path="workflows/builder/:id" element={<WorkflowBuilder />} />
               <Route path="ai-builder" element={<AIBuilder />} />
               <Route path="analytics" element={<Analytics />} />
               <Route path="templates" element={<Templates />} />

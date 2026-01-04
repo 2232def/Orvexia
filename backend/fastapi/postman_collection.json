@@ -1,0 +1,153 @@
+{
+	"info": {
+		"_postman_id": "b3e5f2a1-1234-4567-890a-bcdef1234567",
+		"name": "Orvexia Workflow Worker",
+		"description": "Collection for testing the Simulated Workflow Worker (FastAPI). Includes E-commerce, Marketing, and DevOps simulations.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "E-Commerce",
+			"item": [
+				{
+					"name": "Check Inventory",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sku\": \"GADGET-001\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/ecommerce/inventory/check",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"ecommerce",
+								"inventory",
+								"check"
+							]
+						},
+						"description": "Checks simulated stock levels. Returns random stock and warehouse location."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Shipping Label",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"address\": \"123 Tech Blvd, Silicon Valley, CA\",\n    \"weight\": 4.5\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/ecommerce/shipping/label",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"ecommerce",
+								"shipping",
+								"label"
+							]
+						},
+						"description": "Generates a realistic tracking ID and cost based on weight."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Marketing",
+			"item": [
+				{
+					"name": "Send Email Campaign",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"subject\": \"Exclusive Offer: 50% Off!\",\n    \"recipient_count\": 5000\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/marketing/campaign/send",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"marketing",
+								"campaign",
+								"send"
+							]
+						},
+						"description": "Simulates sending a mass email campaign. Note the processing latency."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DevOps",
+			"item": [
+				{
+					"name": "Trigger Deployment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"repo_url\": \"https://github.com/orvexia/core-platform\",\n    \"branch\": \"feature/v2-upgrade\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/devops/deployment/trigger",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"devops",
+								"deployment",
+								"trigger"
+							]
+						},
+						"description": "Triggers a CI build. HAS A 10% CHANCE OF FAILURE to test error handling."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
