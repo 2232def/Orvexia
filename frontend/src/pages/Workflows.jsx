@@ -1,7 +1,8 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Plus, Play, Edit, Trash2, MoreVertical, Clock, Search } from 'lucide-react';
-import { workflows } from '../utils/mockData';
+import { workflowApi } from '../lib/api';
 
 // Function to map workflow names to actual workflow images
 const getWorkflowImage = (name) => {
@@ -27,6 +28,33 @@ const getWorkflowImage = (name) => {
 
 export const Workflows = () => {
   const navigate = useNavigate();
+  const [workflows, setWorkflows] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchWorkflows = async () => {
+      try {
+        const data = await workflowApi.getAll();
+        setWorkflows(data);
+      } catch (err) {
+        console.error('Failed to fetch workflows:', err);
+        setError('Failed to load workflows');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchWorkflows();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#111111]">
+        <div className="w-16 h-16 border-4 border-orange-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#111111] p-4 md:p-8">
@@ -83,10 +111,11 @@ export const Workflows = () => {
             const workflowImage = getWorkflowImage(workflow.name);
             return (
               <motion.div
-                key={workflow.id}
+                key={workflow._id || workflow.id || idx}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
+                onClick={() => navigate(`/workflows/builder/${workflow._id || workflow.id}`)}
                 className="group bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2a2a2a] rounded-xl overflow-hidden shadow-sm hover:shadow-xl hover:border-orange-300 dark:hover:border-orange-700 transition-all cursor-pointer"
               >
                 {/* Visual Header - Workflow Image */}
@@ -133,11 +162,11 @@ export const Workflows = () => {
                   <div className="flex items-center justify-between pt-3 border-t border-gray-50 dark:border-gray-800">
                     <div>
                       <p className="text-[9px] uppercase font-bold text-gray-400">Executions</p>
-                      <p className="text-sm font-bold text-gray-600 dark:text-gray-300">{workflow.executions.toLocaleString()}</p>
+                      <p className="text-sm font-bold text-gray-600 dark:text-gray-300">{workflow.executions || 0}</p>
                     </div>
                     <div className="text-right">
                       <p className="text-[9px] uppercase font-bold text-gray-400">Success</p>
-                      <p className="text-sm font-bold text-green-600 dark:text-green-500">{workflow.successRate}%</p>
+                      <p className="text-sm font-bold text-green-600 dark:text-green-500">{workflow.successRate || 0}%</p>
                     </div>
                   </div>
                 </div>

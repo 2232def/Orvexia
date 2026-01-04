@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ReactFlow, {
   MiniMap,
   Controls,
@@ -40,9 +40,11 @@ import {
   ZoomIn,
   ZoomOut,
   Maximize2,
-  ChevronUp
+  ChevronUp,
+  Loader2
 } from 'lucide-react';
 import { AppLogos } from './AppLogos';
+import { workflowApi } from '../lib/api';
 
 // --- Configuration Data ---
 const popularApps = [
@@ -85,6 +87,9 @@ const appCategories = [
   { id: 'flow-controls', label: 'Flow Controls', icon: Filter },
 ];
 
+const nodeTypes = {};
+const edgeTypes = {};
+
 const initialNodes = [
   {
     id: 'start',
@@ -122,6 +127,8 @@ const WorkflowCanvasInner = ({
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         onNodeClick={onNodeClick}
+        nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
         fitView
         className="bg-[#0B0D14]" 
       >
@@ -158,6 +165,7 @@ const WorkflowCanvasInner = ({
 
 export const WorkflowBuilder = () => {
   const navigate = useNavigate();
+  const { id } = useParams(); // Get ID from URL if present
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [selectedNode, setSelectedNode] = useState(null);
@@ -171,15 +179,67 @@ export const WorkflowBuilder = () => {
   const [historyIndex, setHistoryIndex] = useState(0);
   const [nodeIdCounter, setNodeIdCounter] = useState(1);
   const [currentNodeForApp, setCurrentNodeForApp] = useState(null);
+  const [triggerSlug, setTriggerSlug] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Load workflow if ID is present
+  useEffect(() => {
+    if (id) {
+        const loadWorkflow = async () => {
+            setIsLoading(true);
+            try {
+                const data = await workflowApi.getById(id);
+                if (data) {
+                    setWorkflowName(data.name);
+                    setTriggerSlug(data.triggerSlug);
+                    if (data.nodes) setNodes(data.nodes);
+                    if (data.edges) setEdges(data.edges);
+                }
+            } catch (error) {
+                console.error("Failed to load workflow", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        loadWorkflow();
+    }
+  }, [id, setNodes, setEdges]);
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    try {
+        const payload = {
+            name: workflowName,
+            nodes,
+            edges,
+            triggerSlug: triggerSlug // Pass slug if we have it (for updates)
+        };
+        const result = await workflowApi.create(payload);
+        if (result && result.triggerSlug) {
+            setTriggerSlug(result.triggerSlug);
+            
+            // If we just created a new workflow, switch the URL to the edit URL
+            if (!id && result.workflowId) {
+                 navigate(`/workflows/builder/${result.workflowId}`, { replace: true }); 
+            }
+        }
+    } catch (error) {
+        console.error("Failed to save workflow", error);
+    } finally {
+        setIsSaving(false);
+    }
+  };
 
   useEffect(() => {
     const handleKeyDown = (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) { e.preventDefault(); undo(); }
       if ((e.ctrlKey || e.metaKey) && (e.key === 'y' || (e.key === 'z' && e.shiftKey))) { e.preventDefault(); redo(); }
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); handleSave(); }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [historyIndex, history]);
+  }, [historyIndex, history, nodes, edges, workflowName, triggerSlug]);
 
   const onConnect = useCallback((params) => {
     const newEdges = addEdge({ ...params, animated: true, type: 'smoothstep', markerEnd: { type: MarkerType.ArrowClosed, color: '#64748b' }, style: { stroke: '#64748b', strokeWidth: 2 } }, edges);
@@ -293,7 +353,7 @@ export const WorkflowBuilder = () => {
     saveHistory(newNodes, edges);
   };
 
-  const onNodeClick = (event, node) => setSelectedNode(node);
+  const onNodeClick = useCallback((event, node) => setSelectedNode(node), []);
 
   const filteredApps = [...popularApps, ...builtInTools].filter(app => {
     const matchesSearch = searchQuery === '' || app.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -323,7 +383,23 @@ export const WorkflowBuilder = () => {
         
         {/* Right side simple actions */}
         <div className="flex items-center gap-3">
-           <button className="text-sm text-gray-400 hover:text-white transition">Saved</button>
+           <button 
+             onClick={handleSave}
+             disabled={isSaving}
+             className="text-sm font-medium text-gray-400 hover:text-white transition flex items-center gap-2"
+           >
+             {isSaving ? (
+                 <>
+                   <Loader2 className="w-4 h-4 animate-spin" />
+                   Saving...
+                 </>
+             ) : (
+                 <>
+                   <Save className="w-4 h-4" />
+                   Save
+                 </>
+             )}
+           </button>
            <button className="p-2 hover:bg-[#1f2937] rounded-full transition text-gray-400">
              <SettingsIcon className="w-5 h-5" />
            </button>
@@ -333,14 +409,20 @@ export const WorkflowBuilder = () => {
       <div className="flex flex-1 overflow-hidden">
         {/* Main Canvas Area */}
         <div className="flex-1 relative">
-           <ReactFlowProvider>
-              <WorkflowCanvasInner 
-                nodes={nodes} edges={edges} onNodesChange={onNodesChange} onEdgesChange={onEdgesChange}
-                onConnect={onConnect} onNodeClick={onNodeClick} undo={undo} redo={redo}
-                historyIndex={historyIndex} history={history} 
-                addNodeFromApp={addNodeFromApp} setShowAppSelector={setShowAppSelector}
-              />
-           </ReactFlowProvider>
+           {isLoading ? (
+             <div className="flex items-center justify-center h-full">
+               <Loader2 className="w-8 h-8 text-orange-500 animate-spin" />
+             </div>
+           ) : (
+               <ReactFlowProvider>
+                  <WorkflowCanvasInner 
+                    nodes={nodes} edges={edges} onNodesChange={onNodesChange} onEdgesChange={onEdgesChange}
+                    onConnect={onConnect} onNodeClick={onNodeClick} undo={undo} redo={redo}
+                    historyIndex={historyIndex} history={history} 
+                    addNodeFromApp={addNodeFromApp} setShowAppSelector={setShowAppSelector}
+                  />
+               </ReactFlowProvider>
+           )}
         </div>
 
         {/* RIGHT SIDEBAR - NODE SETTINGS */}

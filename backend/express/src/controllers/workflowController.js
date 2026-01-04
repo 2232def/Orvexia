@@ -1,20 +1,41 @@
 const Workflow = require("../models/workflow-model");
 const WorkflowVersion = require("../models/workflowVersion-model");
+const crypto = require('crypto');
 
 // 1. Create/Update a Workflow (The "Save" Button)
 const createWorkflow = async (req, res) => {
   try {
-    const { name, owner_id, triggerSlug, nodes, edges } = req.body;
+    const { name, triggerSlug, nodes, edges } = req.body;
+    const owner_id = req.user.id;
+
+    // Generate slug if not provided
+    const slug = triggerSlug || crypto.randomBytes(8).toString('hex');
 
     // A. Find or Create the "Container" (Workflow)
-    let workflow = await Workflow.findOne({ triggerSlug });
+    // Try to find by slug if provided, OR by name/owner? 
+    // For now, let's rely on slug if provided, otherwise create new.
+    // If updating, the frontend should ideally send the slug or ID. 
+    // But here we are simplifying: 
+    // If valid triggerSlug is sent and exists -> Update
+    // Else -> Create New
+
+    let workflow;
+    if (triggerSlug) {
+        workflow = await Workflow.findOne({ triggerSlug });
+    }
 
     if (!workflow) {
       workflow = await Workflow.create({
         name,
         owner_id,
-        triggerSlug,
+        triggerSlug: slug,
       });
+    } else {
+        // Update name if changed
+        if (name) {
+            workflow.name = name;
+            await workflow.save();
+        }
     }
 
     // B. Increment Version (Count + 1)
@@ -35,7 +56,7 @@ const createWorkflow = async (req, res) => {
     workflow.is_active = true;
     await workflow.save();
 
-    res.json({ success: true, workflowId: workflow._id, version: newVersion });
+    res.json({ success: true, workflowId: workflow._id, version: newVersion, triggerSlug: workflow.triggerSlug });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
