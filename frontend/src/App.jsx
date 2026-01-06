@@ -72,13 +72,29 @@ function App() {
             >
               <Route path="home" element={<Home />} />
               <Route path="workflows" element={<Workflows />} />
-              <Route path="workflows/builder" element={<WorkflowBuilder />} />
-              <Route path="workflows/builder/:id" element={<WorkflowBuilder />} />
               <Route path="ai-builder" element={<AIBuilder />} />
               <Route path="analytics" element={<Analytics />} />
               <Route path="templates" element={<Templates />} />
               <Route path="settings" element={<Settings />} />
             </Route>
+
+            {/* Workflow Builder routes - Protected but without AppLayout */}
+            <Route
+              path="workflows/builder"
+              element={
+                <ProtectedRoute>
+                  <WorkflowBuilder />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="workflows/builder/:id"
+              element={
+                <ProtectedRoute>
+                  <WorkflowBuilder />
+                </ProtectedRoute>
+              }
+            />
 
             {/* Catch all - redirect to landing */}
             <Route path="*" element={<Navigate to="/" replace />} />
