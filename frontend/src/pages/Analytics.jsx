@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { TrendingUp, Activity, Clock, Zap } from 'lucide-react';
 import { LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
-import { chartData } from '../utils/mockData';
+import { chartData } from '../utils/MockData';
 
 const performanceData = [
   { hour: '00:00', executions: 45 },
