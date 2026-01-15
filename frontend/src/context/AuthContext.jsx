@@ -14,6 +14,18 @@ const api = axios.create({
   },
 });
 
+// Add request interceptor to include token from localStorage
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -40,6 +52,8 @@ export const AuthProvider = ({ children }) => {
         console.error("Fetch user error:", error);
       }
       setUser(null);
+      // Clear invalid token
+      localStorage.removeItem('token');
     } finally {
       setLoading(false);
     }
@@ -53,6 +67,10 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await api.post('/login', { email, password });
       if (response.data.status) {
+        // Store token if provided (fallback for cross-origin cookie issues)
+        if (response.data.token) {
+          localStorage.setItem('token', response.data.token);
+        }
         await fetchUser();
         return response.data;
       }
@@ -82,10 +100,12 @@ export const AuthProvider = ({ children }) => {
     try {
       await api.post('/logout');
       setUser(null);
+      localStorage.removeItem('token');
     } catch (error) {
       console.error("Logout error:", error);
       // Force logout on client even if server fails
       setUser(null);
+      localStorage.removeItem('token');
     }
   };
 

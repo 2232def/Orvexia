@@ -29,7 +29,10 @@ app.use(
     origin: ["http://localhost:5173", "https://orvexia.vercel.app"], 
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    exposedHeaders: ["Set-Cookie"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    preflightContinue: false,
+    optionsSuccessStatus: 204
   })
 );
 app.use(cookieParser());

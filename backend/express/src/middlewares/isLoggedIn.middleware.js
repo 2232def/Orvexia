@@ -2,14 +2,22 @@ const jwt = require("jsonwebtoken");
 
 const isLoggedIn = (req, res, next) => {
   try {
-    // 1. extract token from request of the user API call (from cookies)
-    const token = req.cookies.jwtToken;
+    // 1. extract token from cookies or Authorization header
+    let token = req.cookies.jwtToken;
+    
+    // Fallback to Authorization header if cookie is not present (for cross-origin requests)
+    if (!token && req.headers.authorization) {
+      const authHeader = req.headers.authorization;
+      if (authHeader.startsWith('Bearer ')) {
+        token = authHeader.substring(7);
+      }
+    }
 
     // 2. check if token exists
     if (!token) {
       return res.status(401).json({
         status: false,
-        message: "Unauthorized access",
+        message: "Unauthorized access - No token provided",
       });
     }
 
