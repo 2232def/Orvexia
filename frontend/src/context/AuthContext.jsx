@@ -7,7 +7,7 @@ const AuthContext = createContext();
 const api = axios.create({
   baseURL: import.meta.env.PROD 
     ? 'https://orvexia-backend.vercel.app/api/v1/users'
-    : '/api/v1/users',
+    : 'http://localhost:3000/api/v1/users',
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
