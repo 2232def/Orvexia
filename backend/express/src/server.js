@@ -6,7 +6,7 @@ require("dotenv").config({ path: path.join(__dirname, '../../.env') });
 require("./config/mongoose-connection");
 const workflowRouter = require("./routes/workflowRoutes");
 const webhookRoutes = require("./routes/webhookRoutes");
-const appsRouter = require("./routes/apps.routes");
+// const appsRouter = require("./routes/apps.routes");
 const userRoutes = require("./routes/user.routes");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -14,10 +14,9 @@ const cookieParser = require("cookie-parser");
 const app = express();
 const server = http.createServer(app);
 
-// Initialize Socket.io
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173", // Frontend URL
+    origin: ["http://localhost:5173", "https://orvexia.vercel.app"], 
     methods: ["GET", "POST"],
     credentials: true
   }
@@ -27,7 +26,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: "http://localhost:5173", // Explicitly set for Socket.io/Express compatibility
+    origin: ["http://localhost:5173", "https://orvexia.vercel.app"], 
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: "GET, POST, PUT, DELETE",
@@ -35,7 +34,6 @@ app.use(
 );
 app.use(cookieParser());
 
-// Make io accessible to our routers
 app.use((req, res, next) => {
   req.io = io;
   next();
@@ -47,7 +45,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/workflows',workflowRouter);
 app.use('/api/webhook', webhookRoutes);
-app.use('/api/apps', appsRouter);
+// app.use('/api/apps', appsRouter);
 
 // console.log('Apps Router Loaded', appsRouter);
 const port = process.env.PORT || 3000;
