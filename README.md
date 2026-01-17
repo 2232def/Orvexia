@@ -120,8 +120,8 @@ We solve the "AI Hallucination" problem with a 3-Layer Defense System:
 
 Demo Video: 
 This demo currently showcases only the **frontend** and does not represent the full set of functionalities. Please note that this is our **first version**, and we are currently **trying to improve it**. 
-https://github.com/user-attachments/assets/5b2c4c34-ad4e-4814-aed0-033c26e7cfe6
 
+https://github.com/user-attachments/assets/5b2c4c34-ad4e-4814-aed0-033c26e7cfe6
 
 👥 Contributors
 [Anay Mishra] 
